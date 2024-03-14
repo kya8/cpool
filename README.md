@@ -9,10 +9,10 @@ When enqueuing a job, you can optionally receive a _future_ handle associated wi
 This provides an easy way to wait on individual jobs, without the need for manual synchronization.
 
 # Example usage
-```c++
-#include <stdio.h>
+```c
 #include "cpool.h"
-#include "threads.h"
+#include <stdio.h>
+#include <threads.h>
 #include <stdlib.h>
 
 static void sleep(void* arg)
@@ -30,7 +30,7 @@ static void print_int(void* arg)
 
 int main(void)
 {
-	cpool* tp = cpool_create(8, 8);
+	cpool* tp = cpool_create(8, 8); // creates pool with 8 worker threads, job queue capacity 8.
 	if (!tp) return 1;
 
 	cpool_future* fut;
