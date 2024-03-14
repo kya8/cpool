@@ -7,9 +7,10 @@ typedef struct {
     cpool_func_t func;
     void* data;
     // cpool_work_clean_func clean_func;
+    // cpool_future** future;
 } cpool_work;
 
-struct cpool_s {
+struct cpool {
     thrd_t* workers;     /* Allocated array of thread identifiers. Joined on destruction. */
     size_t nb_workers;
 

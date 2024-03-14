@@ -7,13 +7,11 @@
 extern "C" {
 #endif
 
-/**
- * job function type
-*/
+/* job function type */
 typedef void (*cpool_func_t)(void*);
 
-struct cpool_s; /* opaque pool struct */
-typedef struct cpool_s cpool;
+/* opaque pool struct */
+typedef struct cpool cpool;
 
 /**
  * @brief Allocate and initialize a thread pool.
