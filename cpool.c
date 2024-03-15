@@ -98,7 +98,7 @@ thread_func(void* pool_ptr) {
 
         {
             mtx_lock(&pool->mutex);
-            if (--pool->nb_working == 0 && pool->job_count == 0) cnd_signal(&pool->cond_idle);
+            if (--pool->nb_working == 0 && pool->job_count == 0) cnd_broadcast(&pool->cond_idle);
             mtx_unlock(&pool->mutex);
         }
     }
