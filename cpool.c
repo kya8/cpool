@@ -134,10 +134,19 @@ cpool_create(size_t nb_workers, size_t max_jobs)
         }
         else break;
     }
-    //FIXME: clean-up threads in case of failure!
-    assert(thread_success_count == nb_workers);
-    goto end;
+    /* clean up threads in case of failure */
+    if (thread_success_count == nb_workers) goto end;
+    {
+        mtx_lock(&pool->mutex);
+        pool->stop = 1;
+        mtx_unlock(&pool->mutex);
+    }
+    cnd_broadcast(&pool->cond);
+    for (size_t i = 0; i < thread_success_count; ++i) {
+        thrd_join(pool->workers[i], NULL);
+    }
 
+    cnd_destroy(&pool->cond_idle);
 cond_idle_fail:
     cnd_destroy(&pool->cond_enqueue);
 cond_enqueue_fail:

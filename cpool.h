@@ -63,7 +63,7 @@ void cpool_wait(cpool* pool);
 /**
  * @brief Wait on the future handle, returning when the associated job has finished.
  * 
- * @attention Only one thread can wait on a future.
+ * @attention Only one thread can wait on a future, and only once.
 */
 void cpool_wait_future(cpool_future* future);
 

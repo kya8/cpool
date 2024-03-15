@@ -36,8 +36,10 @@ int main(void)
 	cpool_future* fut;
 	cpool_enqueue(tp, sleep, NULL, &fut);
 
-	puts("Waiting for future...");
-	cpool_wait_future(fut);
+	if (fut) {
+		puts("Waiting for future...");
+		cpool_wait_future(fut);
+	}
 	puts("Waiting for pool...");
 	cpool_wait(tp);
 	puts("pool finished");
