@@ -10,7 +10,7 @@ struct cpool_future {
 };
 
 static cpool_future*
-cpool_future_create() {
+cpool_future_create(void) {
     cpool_future* ptr = malloc(sizeof(*ptr));
     if (!ptr) goto end;
     ptr->flag = 0;
