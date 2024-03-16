@@ -10,7 +10,8 @@ struct cpool_future {
 };
 
 static cpool_future*
-cpool_future_create(void) {
+cpool_future_create(void)
+{
     cpool_future* ptr = malloc(sizeof(*ptr));
     if (!ptr) goto end;
     ptr->flag = 0;
@@ -59,7 +60,8 @@ struct cpool {
 };
 
 static int
-thread_func(void* pool_ptr) {
+thread_func(void* pool_ptr)
+{
     cpool* pool = pool_ptr;
     for (;;) {
         cpool_func_t job_func;
@@ -120,11 +122,11 @@ cpool_create(size_t nb_workers, size_t max_jobs)
     pool->stop       = 0;
 
     if (!(pool->workers = malloc(sizeof(thrd_t) * nb_workers))) goto workers_fail;
-    if (!(pool->jobs = malloc(sizeof(cpool_work) * max_jobs))) goto jobs_fail;
-    if (mtx_init(&pool->mutex, mtx_plain) != thrd_success) goto mutex_fail;
-    if (cnd_init(&pool->cond) != thrd_success) goto cond_fail;
-    if (cnd_init(&pool->cond_enqueue) != thrd_success) goto cond_enqueue_fail;
-    if (cnd_init(&pool->cond_idle) != thrd_success) goto cond_idle_fail;
+    if (!(pool->jobs = malloc(sizeof(cpool_work) * max_jobs)))  goto jobs_fail;
+    if (mtx_init(&pool->mutex, mtx_plain) != thrd_success)      goto mutex_fail;
+    if (cnd_init(&pool->cond)             != thrd_success)      goto cond_fail;
+    if (cnd_init(&pool->cond_enqueue)     != thrd_success)      goto cond_enqueue_fail;
+    if (cnd_init(&pool->cond_idle)        != thrd_success)      goto cond_idle_fail;
 
     /* launch workers */
     size_t thread_success_count = 0;
